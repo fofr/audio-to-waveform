@@ -25,9 +25,9 @@ class Predictor(BasePredictor):
         if caption_text == "" or caption_text is None:
             return Path(waveform_video)
         else:
-            padded_waveform_path = "padded_waveform.mp4"
-            background_image_path = "background.png"
-            final_video_path = "final_waveform.mp4"
+            padded_waveform_path = "/tmp/padded_waveform.mp4"
+            background_image_path = "/tmp/background.png"
+            final_video_path = "/tmp/final_waveform.mp4"
 
             # Add padding to the top of the waveform video
             subprocess.run([
