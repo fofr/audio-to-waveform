@@ -31,21 +31,21 @@ class Predictor(BasePredictor):
 
             # Add padding to the top of the waveform video
             subprocess.run([
-                'ffmpeg', '-i', waveform_video, '-vf',
-                'pad=width=1000:height=667:x=0:y=467:color=black',
+                'ffmpeg', '-y', '-i', waveform_video, '-vf',
+                f'pad=width=1000:height=667:x=0:y=467:color={bg_color[1:]}',
                 padded_waveform_path
             ], check=True)
 
             # Create an image using ImageMagick
             subprocess.run([
-                'convert', '-background', 'black', '-fill', 'white', '-font', 'font/Roboto-Black.ttf',
-                '-pointsize', '48', '-size', '900x367', '-gravity', 'center', 'caption:' + caption_text,
-                '-bordercolor', 'black', '-border', '40', background_image_path
+                'convert', '-background', bg_color, '-fill', bars_color, '-font', 'font/Roboto-Black.ttf',
+                '-pointsize', '48', '-size', '900x367', '-gravity', 'center', f'caption:{caption_text}',
+                '-bordercolor', bg_color, '-border', '40', background_image_path
             ], check=True)
 
             # Overlay the image on the padded waveform video
             subprocess.run([
-                'ffmpeg', '-i', padded_waveform_path, '-i', background_image_path,
+                'ffmpeg', '-y', '-i', padded_waveform_path, '-i', background_image_path,
                 '-filter_complex', 'overlay=0:0', final_video_path
             ], check=True)
 
