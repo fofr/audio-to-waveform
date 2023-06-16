@@ -1,6 +1,7 @@
 import subprocess
 from cog import BasePredictor, Input, Path
 import gradio as gr
+import tempfile
 
 class Predictor(BasePredictor):
     def predict(self,
@@ -25,9 +26,9 @@ class Predictor(BasePredictor):
         if caption_text == "" or caption_text is None:
             return Path(waveform_video)
         else:
-            padded_waveform_path = "/tmp/padded_waveform.mp4"
-            background_image_path = "/tmp/background.png"
-            final_video_path = "/tmp/final_waveform.mp4"
+            padded_waveform_path = tempfile.mktemp(suffix=".mp4")
+            background_image_path = tempfile.mktemp(suffix=".png")
+            final_video_path = tempfile.mktemp(suffix=".mp4")
 
             # Add padding to the top of the waveform video
             subprocess.run([
