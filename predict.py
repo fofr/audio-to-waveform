@@ -33,15 +33,15 @@ class Predictor(BasePredictor):
             # Add padding to the top of the waveform video
             subprocess.run([
                 'ffmpeg', '-y', '-i', waveform_video, '-vf',
-                f'pad=width=1000:height=667:x=0:y=467:color={bg_color[1:]}',
+                f'pad=width=1000:height=667:x=0:y=267:color={bg_color[1:]}',
                 padded_waveform_path
             ], check=True)
 
             # Create an image using ImageMagick
             subprocess.run([
-                'convert', '-background', bg_color, '-fill', bars_color, '-font', 'font/Roboto-Black.ttf',
-                '-pointsize', '48', '-size', '900x367', '-gravity', 'center', f'caption:{caption_text}',
-                '-bordercolor', bg_color, '-border', '40', background_image_path
+                'convert', '-background', 'transparent', '-fill', bars_color, '-font', 'font/Roboto-Black.ttf',
+                '-pointsize', '48', '-size', '900x267', '-gravity', 'center', f'caption:{caption_text}',
+                '-bordercolor', 'transparent', '-border', '10', background_image_path
             ], check=True)
 
             # Overlay the image on the padded waveform video
